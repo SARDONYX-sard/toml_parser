@@ -1,17 +1,8 @@
-export function setValueToObject<T>(obj, keys: string[], value: T) {
-  let refObj = obj; // Each loop points to a nested object.
-  for (let index = 0; index < keys.length - 1; index++) {
-    refObj = refObj[keys[index]]; // Go into nest object...(except last nest key)
-  }
-  const lastKey = keys[keys.length - 1];
-  refObj[lastKey] = value;
-}
-
 /**
- * Create nested object from keys
+ * Set to nested object by keys.
  * # Examples
  *
- * ## Simple set to nested object
+ * ## 1. Simple set to nested object
  * ```javascript
  * const keys = ['a', 'b', 'c', 'd', 'e', 'f'];
  * const nestedObject = {
@@ -31,7 +22,7 @@ export function setValueToObject<T>(obj, keys: string[], value: T) {
  * console.assert(nestedObject.a.b.c.d.e.f === 'Depth 6 Test');
  * ```
  *
- * ## If the number of keys > object
+ * ## 2. If the number of keys > object
  * - Create a new object and assign value to it.
  * ```javascript
  *   const keys = ['dog', 'tater.man', 'hi'];
@@ -43,7 +34,18 @@ export function setValueToObject<T>(obj, keys: string[], value: T) {
  *   setValueToObject(nestedObject, keys, 'Depth 3 Test');
  *   console.assert(nestedObject.dog['tater.man']['hi'] === 'Depth 3 Test');
  * ```
- *
+ */
+export function setValueToObject<T>(obj, keys: string[], value: T) {
+  let refObj = obj; // Each loop points to a nested object.
+  for (let index = 0; index < keys.length - 1; index++) {
+    refObj = refObj[keys[index]]; // Go into nest object...(except last nest key)
+  }
+  const lastKey = keys[keys.length - 1];
+  refObj[lastKey] = value;
+}
+
+/**
+ * Create nested object from keys
  * @export
  * @template T
  * @param {Array<T>} array
@@ -66,14 +68,12 @@ export function arrayToNestObj<T extends string | number | symbol>(array: Array<
  * @export
  * @param {object} target
  * @param {object} source
- * @return {object}
+ * @return new merged object
  * # Examples
  * ```javascript
  * const obj1 = { a: 1, b: { c: 2 } };
  * const obj2 = { b: { d: 3 }, e: 4 };
  * const mergedObj = deepMerge(obj1, obj2);
- *
- * // Write your assertions using Jest matchers
  * console.assert(JSON.stringify(mergedObj) === JSON.stringify({ a: 1, b: { c: 2, d: 3 }, e: 4 }));
  * ```
  */
@@ -99,7 +99,6 @@ export function deepMerge(target: object, source: object): object {
   return source;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isObject(item: unknown): boolean {
   return item !== null && typeof item === 'object' && !Array.isArray(item);
 }
