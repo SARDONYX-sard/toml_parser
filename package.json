@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "SARDONYX",
   "license": "MIT",
-  "description": "",
+  "description": "Simple toml parser",
   "main": "./dist/main.js",
   "scripts": {
     "build-base": "esbuild ./src/main.ts --bundle --outfile=dist/main.js --format=esm",

@@ -78,7 +78,7 @@ jobs:
           node-version: '${{ matrix.node }}'
       - name: 'Install dependencies if needed'
         if: steps.node-modules-dependencies.outputs.cache-hit != 'true'
-        run: 'pnpm i'
+        run: 'npm i'
       - name: 'Restore cached dependencies'
         id: 'node-modules-dependencies'
         uses: 'actions/cache@v2'
